@@ -1,11 +1,13 @@
 const { Pool } = require('pg');
+require('dotenv').config()
 
+console.log(process.env.USER_DB, process.env.PASSWORD,  process.env.HOST,  process.env.PORT,process.env.DATABASE);
 const connectDB = new Pool({
-    user: 'postgres',
-    password: '12345678',
-    host: 'localhost',
-    port: '5432',
-    database: 'chuva_academy'
+    user: process.env.USER_DB,
+    password: process.env.PASSWORD,
+    host: process.env.HOST,
+    port: process.env.PORT,
+    database: process.env.DATABASE
 });
 
 module.exports = connectDB;

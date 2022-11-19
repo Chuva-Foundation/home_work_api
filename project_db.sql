@@ -1,62 +1,57 @@
 CREATE DATABASE chuva_academy;
 
-CREATE TABLE genders(
-    id SERIAL PRIMARY KEY,
-    gender VARCHAR(11)
-);
-INSERT INTO genders (gender) VALUES('male');
-INSERT INTO genders (gender) VALUES('female');
-INSERT INTO genders (gender) VALUES('not defined');
+CREATE TYPE GENDER_TYPE AS ENUM ('male', 'female', 'other');
+CREATE TYPE USER_TYPE AS ENUM ('student', 'teacher');
 
-CREATE TABLE user_types (
+CREATE TABLE classes (
     id SERIAL PRIMARY KEY,
-    name VARCHAR(7)
-);
-INSERT INTO user_types (name) VALUES('student');
-INSERT INTO user_types (name) VALUES('teacher');
-
-
-CREATE TABLE people(
-    id SERIAL PRIMARY KEY,
-    name VARCHAR(255),
-    birth DATE,
-    gender_id INTEGER,
-    FOREIGN KEY(gender_id) REFERENCES gneders(id)
+    user_id INTEGER,
+    FOREIGN KEY(user_id) REFERENCES users(id)
 );
 
 CREATE TABLE users (
-    id SERIAL,
+    id SERIAL PRIMARY KEY,
     user_name VARCHAR(30),
     email VARCHAR(255),
     password VARCHAR(255),
-    user_type_id INTEGER,
-    person_id INTEGER,
-    FOREIGN KEY(user_type_id) REFERENCES user_types(id),
-    FOREIGN KEY(person_id) REFERENCES people(id)
-    
+    full_name VARCHAR(255),
+    gender GENDER_TYPE,
+    user_tp USER_TYPE
 );
 
-CREATE TABLE problem_sets (
+
+CREATE TABLE programming_languages (
+    id SERIAL,
+    name VARCHAR(255)
+)
+
+INSERT INTO programming_languages (name) VALUES ('C');
+INSERT INTO programming_languages (name) VALUES ('JavaScript');
+INSERT INTO programming_languages (name) VALUES ('Python');
+INSERT INTO programming_languages (name) VALUES ('Java');
+INSERT INTO programming_languages (name) VALUES ('C#');
+INSERT INTO programming_languages (name) VALUES ('C++');
+INSERT INTO programming_languages (name) VALUES ('Scracth');
+
+
+CREATE TABLE problems_sets (
     id SERIAL PRIMARY KEY,
     title VARCHAR(200),
     description TEXT NOT NULL,
+    programming_language VARCHAR(255),
     deadline DATE,
-    points REAL
+    points REAL,
+    user_id INTEGER,
+    FOREIGN KEY(user_id) REFERENCES users(id)
 );
+
 
 CREATE TABLE submissions (
     id SERIAL PRIMARY KEY,
     pset_id INTEGER,
     user_id INTEGER,
-    user_points REAL,
+    user_points REAL NULL,
     dir_path TEXT NOT NULL,
     FOREIGN KEY(user_id) REFERENCES users(id),
-    FOREIGN KEY(pset_id) REFERENCES problem_sets(id) 
-);
-
-CREATE TABLE teacher_students (
-    id SERIAL,
-    teacher_id INTEGER,
-    student_id INTEGER,
-    FOREIGN KEY(teacher_id, student_id) REFERENCES users(id, id)
+    FOREIGN KEY(pset_id) REFERENCES problems_sets(id) 
 );

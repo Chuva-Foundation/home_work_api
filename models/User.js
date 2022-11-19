@@ -2,17 +2,17 @@ const connectDB = require('../config/database');
 const bcrypt = require('bcrypt');
 
 class User {
-    static async create(user_name, email, password , gender_id, person) {
+    static async create(user_name, email, password , full_name, gender, user_type) {
         try {
             const hash_password = await bcrypt.hash(password, 8);
-            const user = await connectDB.query('INSERT INTO users (user_name, email, password, gender_id) VALUES($1, $2, $3, $4) RETURNING *', [user_name, email, hash_password, gender_id]);
+            const user = await connectDB.query('INSERT INTO users (user_name, email, password, full_name, gender, user_tp) VALUES($1, $2, $3, $4, $5, $6) RETURNING *', [user_name, email, hash_password, full_name, gender, user_type]);
             return user.rows[0];
         } catch (error) {
             console.log(error.message);
         }
     } 
 
-    static async update(id, user_name, email, password) {
+    static async update(id, user_name, email, password , full_name) {
         try {
             let user;
             if (user_name) {
@@ -25,6 +25,10 @@ class User {
                 const hash_password = await bcrypt.hash(password, 8);
                 user = await connectDB.query('UPDATE users SET password = $1 WHERE id = $2', [hash_password, id])
             }
+            if (full_name) {
+                user = await connectDB.query('UPDATE users SET full_name = $1 WHERE id = $2', [full_name, id])
+            }
+        
             return user.rows[0];
         } catch (error) {
             console.log(error.message);
@@ -59,3 +63,5 @@ class User {
         }
     }
 }
+
+module.exports = User; 
