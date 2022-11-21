@@ -11,8 +11,8 @@ CREATE TABLE classes (
 
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
-    user_name VARCHAR(30),
-    email VARCHAR(255),
+    user_name VARCHAR(30) UNIQUE,
+    email VARCHAR(255) UNIQUE,
     password VARCHAR(255),
     full_name VARCHAR(255),
     gender GENDER_TYPE,
@@ -21,7 +21,7 @@ CREATE TABLE users (
 
 
 CREATE TABLE programming_languages (
-    id SERIAL,
+    id SERIAL PRIMARY KEY,
     name VARCHAR(255)
 )
 
@@ -38,11 +38,12 @@ CREATE TABLE problems_sets (
     id SERIAL PRIMARY KEY,
     title VARCHAR(200),
     description TEXT NOT NULL,
-    programming_language VARCHAR(255),
+    pgrm_lang_id INTEGER,
     deadline DATE,
     points REAL,
     user_id INTEGER,
     FOREIGN KEY(user_id) REFERENCES users(id)
+    FOREIGN KEY(pgrm_lang_id) REFERENCES programming_languages(id)
 );
 
 

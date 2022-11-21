@@ -68,3 +68,5 @@ class ProbemSet {
         }
     }
 }
+
+module.exports = ProbemSet;
