@@ -19,10 +19,19 @@ class Submission {
         }
     } 
 
-    static async getById(id) {
+    static async getOne(id) {
         try {
-            const user = await connectDB.query('SELECT * FROM users WHERE id = $', [id]);
+            const user = await connectDB.query('SELECT * FROM submissions WHERE id = $', [id]);
             return user.rows[0];
+        } catch(error) {
+            console.log(error.message);
+        }
+    }
+
+    static async getAll(user_id) {
+        try {
+            const user = await connectDB.query('SELECT * FROM submissions WHERE user_id = $', [user_id]);
+            return user.rows;
         } catch(error) {
             console.log(error.message);
         }
@@ -30,7 +39,16 @@ class Submission {
     
     static async delete(id) {
         try {
-            await connectDB.query('DELETE FROM users WHERE id = $1', [id]);
+            await connectDB.query('DELETE FROM submissions WHERE id = $1', [id]);
+            return true;
+        } catch (error) {
+            console.log(error.message);
+            return false;
+        }
+    }
+    static async update(id, dir_path) {
+        try {
+            await connectDB.query('UPDATE submissions SET dir_path = $1 FROM users WHERE id = $2', [ dir_path, id]);
             return true;
         } catch (error) {
             console.log(error.message);
@@ -40,3 +58,6 @@ class Submission {
 
 }
 
+
+
+module.exports = Submission;

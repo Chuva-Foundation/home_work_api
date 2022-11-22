@@ -20,25 +20,11 @@ CREATE TABLE users (
 );
 
 
-CREATE TABLE programming_languages (
-    id SERIAL PRIMARY KEY,
-    name VARCHAR(255)
-)
-
-INSERT INTO programming_languages (name) VALUES ('C');
-INSERT INTO programming_languages (name) VALUES ('JavaScript');
-INSERT INTO programming_languages (name) VALUES ('Python');
-INSERT INTO programming_languages (name) VALUES ('Java');
-INSERT INTO programming_languages (name) VALUES ('C#');
-INSERT INTO programming_languages (name) VALUES ('C++');
-INSERT INTO programming_languages (name) VALUES ('Scracth');
-
 
 CREATE TABLE problems_sets (
     id SERIAL PRIMARY KEY,
-    title VARCHAR(200),
+    title VARCHAR(50),
     description TEXT NOT NULL,
-    pgrm_lang_id INTEGER,
     deadline DATE,
     points REAL,
     user_id INTEGER,
