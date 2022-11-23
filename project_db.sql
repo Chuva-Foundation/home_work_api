@@ -11,7 +11,7 @@ CREATE TABLE classes (
 
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
-    user_name VARCHAR(30) UNIQUE,
+    user_name VARCHAR(10) UNIQUE,
     email VARCHAR(255) UNIQUE,
     password VARCHAR(255),
     full_name VARCHAR(255),
@@ -29,7 +29,6 @@ CREATE TABLE problems_sets (
     points REAL,
     user_id INTEGER,
     FOREIGN KEY(user_id) REFERENCES users(id)
-    FOREIGN KEY(pgrm_lang_id) REFERENCES programming_languages(id)
 );
 
 

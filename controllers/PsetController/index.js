@@ -26,7 +26,8 @@ const create = async (req, res) => {
 }
 
 const update = async (req, res) => {
-    const { title, description, deadline, points, pset_id} = req.body;
+    const { pset_id } = req.params;
+    const { title, description, deadline, points} = req.body;
     if (title) {
         if (title.length < 10 || title.length > 50) {
             return res.status(400).json({ sucess: false, error: 'title length too long or too short'});

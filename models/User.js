@@ -52,6 +52,17 @@ class User {
             console.log(error.message);
         }
     }
+
+    static async getAll() {
+        try {
+            const user = await connectDB.query('SELECT * FROM users');
+            return user.rows;
+        } catch(error) {
+            console.log(error.message);
+        }
+    }
+
+    
     
     static async delete(id) {
         try {

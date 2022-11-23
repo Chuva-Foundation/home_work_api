@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 const create = async (req, res) => {
+    console.log(req.body);
     const { email, password } = req.body;
     if (!email) {
         return res.status(400).json({sucess: false, msg: "Email not provided"});
