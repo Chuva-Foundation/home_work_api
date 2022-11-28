@@ -3,12 +3,6 @@ CREATE DATABASE chuva_academy;
 CREATE TYPE GENDER_TYPE AS ENUM ('male', 'female', 'other');
 CREATE TYPE USER_TYPE AS ENUM ('student', 'teacher');
 
-CREATE TABLE classes (
-    id SERIAL PRIMARY KEY,
-    user_id INTEGER,
-    FOREIGN KEY(user_id) REFERENCES users(id)
-);
-
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     user_name VARCHAR(10) UNIQUE,

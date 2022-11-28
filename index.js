@@ -7,23 +7,32 @@ const upload = require('./service/multer');
 const PsetController = require('./controllers/PsetController');
 const cors = require('cors');
 
+
 const app = express();
+
 
 app.use(express.json());
 app.use(cors());
 
+
 // User Routes
 app.post('/user', UserController.create);
 
-app.post("/log_in", SessionController.create);
 
 app.use(auth);
 
+
+app.post("/log_in", SessionController.create);
+
+
 app.put('/user', UserController.update);
+
 
 app.get('/user', UserController.getInfo);
 
+
 app.get('/users/:user_type', UserController.getAll);
+
 
 app.delete('/user/:answer', UserController.deleteUsr);
 

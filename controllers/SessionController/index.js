@@ -1,6 +1,8 @@
 const User = require('../../models/User');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+require('dotenv').config();
+
 
 const create = async (req, res) => {
     console.log(req.body);
@@ -19,7 +21,7 @@ const create = async (req, res) => {
         return res.status(400).json({success: false, error: "Password Incorrect"});
     }
 
-    res.status(200).json({ success: true, token: jwt.sign({id: user.id}, "bbef357897e532a60da4830fac13623e", {expiresIn: '1d'})});
+    res.status(200).json({ success: true, token: jwt.sign({id: user.id}, process.env.SECRET_KEY, {expiresIn: '1d'})});
 }
 
 module.exports = {create};
