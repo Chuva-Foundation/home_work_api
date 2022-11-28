@@ -46,22 +46,21 @@ class User {
 
     static async getById(id) {
         try {
-            const user = await connectDB.query('SELECT * FROM users WHERE id = $', [id]);
+            const user = await connectDB.query('SELECT * FROM users WHERE id = $1', [id]);
             return user.rows[0];
         } catch(error) {
             console.log(error.message);
         }
     }
 
-    static async getAll() {
+    static async getAll(user_type) {
         try {
-            const user = await connectDB.query('SELECT * FROM users');
+            const user = await connectDB.query('SELECT full_name, user_tp FROM users WHERE user_tp = $1', [user_type]);
             return user.rows;
         } catch(error) {
             console.log(error.message);
         }
     }
-
     
     
     static async delete(id) {

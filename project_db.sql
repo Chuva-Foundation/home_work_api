@@ -19,8 +19,6 @@ CREATE TABLE users (
     user_tp USER_TYPE
 );
 
-
-
 CREATE TABLE problems_sets (
     id SERIAL PRIMARY KEY,
     title VARCHAR(50),

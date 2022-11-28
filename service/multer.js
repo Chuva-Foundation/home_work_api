@@ -4,10 +4,7 @@ const path = require('path');
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        const userDir = `uploads/user${req.query.user}`;
-        console.log(`uploads/user${req.query.user}`);
-        console.log(!existsSync(path.resolve(__dirname, '..', userDir)));
-        console.log('adada');
+        const userDir = `uploads/user${req.userId}`;
         if (!existsSync(path.resolve(__dirname, '..', userDir))){
             mkdirSync(path.resolve(__dirname, '..', userDir));
         }
@@ -16,7 +13,7 @@ const storage = multer.diskStorage({
     filename: (req, file, cb) => {
         const uniqueSufix = Date.now() + '-' + Math.round(Math.random()*1E5);
         cb(null, uniqueSufix + '-' +  file.originalname);
-        req.dir_path = path.resolve(__dirname, '..', `uploads/user${req.query.user}`, uniqueSufix + '-' +  file.originalname);
+        req.dir_path = path.resolve(__dirname, '..', `uploads/user${req.userId}`, uniqueSufix + '-' +  file.originalname);
     }
 
 });

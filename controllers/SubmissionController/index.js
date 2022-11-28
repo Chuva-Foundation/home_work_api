@@ -1,5 +1,6 @@
 const Submission = require('../../models/Submission');
-const { unlinkSync } = require('fs');
+const { unlinkSync, readFileSync } = require('fs');
+
 
 const create = async (req, res) => {
     const { userId, dir_path } = req;
@@ -36,16 +37,18 @@ const deleteSubm = async (req, res) => {
 
 const getOne = async (req, res) => {
     const { submission_id } = req.params;
+    const { download } = res;
     const submission = await Submission.getOne(submission_id);
 
     if (!submission) {
         return res.status(404).json({sucess: false, msg: 'submission item not Found'});
     }
     return res.status(200).json({sucess: true, data: submission});
+
 };
 
 const getAll = async (req, res) => {
-    const { userId } = req.params;
+    const { userId } = req;
     const submissions = await Submission.getAll(userId);
 
     if (!submissions.length) {
@@ -54,4 +57,16 @@ const getAll = async (req, res) => {
     return res.status(200).json({sucess: true, data: submissions});
 };
 
-module.exports = { create, update, deleteSubm, getAll, getOne };
+const getAllFromStudent = async (req, res) => {
+    const { user_id } = req.params;
+    const submissions = await Submission.getAll(user_id);
+
+    if (!submissions.length) {
+        return res.status(404).json({sucess: false, msg: 'There is no submissions sent by the student'});
+    }
+    return res.status(200).json({sucess: true, data: submissions});
+};
+
+
+
+module.exports = { create, update, deleteSubm, getAll, getOne, getAllFromStudent };

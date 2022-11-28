@@ -21,7 +21,7 @@ class Submission {
 
     static async getOne(id) {
         try {
-            const user = await connectDB.query('SELECT * FROM submissions WHERE id = $', [id]);
+            const user = await connectDB.query('SELECT * FROM submissions WHERE id = $1', [id]);
             return user.rows[0];
         } catch(error) {
             console.log(error.message);
@@ -30,7 +30,7 @@ class Submission {
 
     static async getAll(user_id) {
         try {
-            const user = await connectDB.query('SELECT * FROM submissions WHERE user_id = $', [user_id]);
+            const user = await connectDB.query('SELECT * FROM submissions WHERE user_id = $1', [user_id]);
             return user.rows;
         } catch(error) {
             console.log(error.message);
